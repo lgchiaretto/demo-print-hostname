@@ -1,4 +1,5 @@
 import socket
+import platform
 from http.server import SimpleHTTPRequestHandler, HTTPServer
 
 class CustomHandler(SimpleHTTPRequestHandler):
@@ -7,7 +8,7 @@ class CustomHandler(SimpleHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-type", "text/html")
         self.end_headers()
-        response = f"Hello From OCP Virt and we are running on {hostname}\n"
+        response = f"Hello From OCP Virt and we are running on {hostname}\n\n {platform.uname()}\n\n"
         self.wfile.write(response.encode())
 
 def run(server_class=HTTPServer, handler_class=CustomHandler, port=8080):
