@@ -1,0 +1,13 @@
+[Unit]
+Description=Python Web Server to Display Hostname
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /usr/src/app/webserver.py
+WorkingDirectory=/usr/src/app
+Restart=always
+User=root
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
