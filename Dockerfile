@@ -1,18 +1,15 @@
-# Use an official Python runtime as a parent image
-FROM python:3.9-slim
+FROM registry.access.redhat.com/ubi9/ubi-minimal
 
-# Set the working directory in the container
+ENV PYTHON_VERSION=3.9 \
+    PATH=/usr/local/bin:$PATH
+
+RUN microdnf install -y python3 \
+    && microdnf clean all
+
 WORKDIR /usr/src/app
 
-# Copy the current directory contents into the container at /usr/src/app
-COPY . .
+COPY webserver.py .
 
-# Install any needed packages specified in requirements.txt
-# (Since this is a simple project, no additional packages are required)
-# RUN pip install --no-cache-dir -r requirements.txt
-
-# Expose the port that the server will run on
 EXPOSE 8080
 
-# Run the server when the container launches
-CMD ["python", "webserver.py"]
+CMD ["python3", "webserver.py"]
